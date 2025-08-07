@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('icon_class')->nullable();
             $table->string('short_desc');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->integer('status')->default(1);
             $table->timestamps();
         });

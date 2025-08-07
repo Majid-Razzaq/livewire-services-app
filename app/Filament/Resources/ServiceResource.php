@@ -6,10 +6,13 @@ use App\Filament\Resources\ServiceResource\Pages;
 use App\Filament\Resources\ServiceResource\RelationManagers;
 use App\Models\Service;
 use Filament\Forms;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -24,15 +27,28 @@ class ServiceResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('title')
+                TextInput::make('title')->required(),
+                TextInput::make('icon_class'),
+                TextInput::make('short_desc')
+                    ->label('Short description')
+                    ->required(),
+                RichEditor::make('Description')
+                    ->columnSpan(2),
+                Select::make('status')->options([
+                    1 => 'Active',
+                    0 => 'Block']),
+
             ]);
+            
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('title'),
+                TextColumn::make('short_desc')
+                    ->label('Short description'),
             ])
             ->filters([
                 //
