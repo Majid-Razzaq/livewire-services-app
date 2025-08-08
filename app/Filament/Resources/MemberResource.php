@@ -2,24 +2,23 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ServiceResource\Pages;
-use App\Filament\Resources\ServiceResource\RelationManagers;
-use App\Models\Service;
+use App\Filament\Resources\MemberResource\Pages;
+use App\Filament\Resources\MemberResource\RelationManagers;
+use App\Models\Member;
 use Filament\Forms;
-use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ServiceResource extends Resource
+class MemberResource extends Resource
 {
-    protected static ?string $model = Service::class;
+    protected static ?string $model = Member::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -27,28 +26,24 @@ class ServiceResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('title')->required(),
-                TextInput::make('icon_class'),
-                TextInput::make('short_desc')
-                    ->label('Short description')
-                    ->required(),
-                RichEditor::make('description')
-                    ->columnSpan(2),
+                TextInput::make('name')->required()->placeholder('Enter your name'),
+                TextInput::make('designation')->required()->placeholder('Enter designation'),
+                TextInput::make('tw_url')->label('Twitter URL')->placeholder('Twitter URL'),
+                TextInput::make('fb_url')->label('Facebook URL')->placeholder('Facebook URL'),
+                TextInput::make('in_url')->label('Instagram URL')->placeholder('Instagram URL'),
+                FileUpload::make('image'),
                 Select::make('status')->options([
                     1 => 'Active',
-                    0 => 'Block']),
-
+                    0 => 'Block',
+                ])
             ]);
-            
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('title'),
-                TextColumn::make('short_desc')
-                    ->label('Short description'),
+                //
             ])
             ->filters([
                 //
@@ -73,9 +68,9 @@ class ServiceResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListServices::route('/'),
-            'create' => Pages\CreateService::route('/create'),
-            'edit' => Pages\EditService::route('/{record}/edit'),
+            'index' => Pages\ListMembers::route('/'),
+            'create' => Pages\CreateMember::route('/create'),
+            'edit' => Pages\EditMember::route('/{record}/edit'),
         ];
     }
 }

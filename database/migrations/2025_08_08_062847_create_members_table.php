@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('services', function (Blueprint $table) {
+        Schema::create('members', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('icon_class')->nullable();
-            $table->string('short_desc');
-            $table->text('description')->nullable();
+            $table->String('name');
+            $table->String('designation');
+            $table->string('fb_url')->nullable();
+            $table->String('tw_url')->nullable();
+            $table->String('in_url')->nullable();
+            $table->String('image')->nullable();
             $table->integer('status')->default(1);
             $table->timestamps();
         });
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('services');
+        Schema::dropIfExists('members');
     }
 };
