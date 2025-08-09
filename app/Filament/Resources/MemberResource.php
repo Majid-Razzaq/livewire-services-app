@@ -12,6 +12,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -28,14 +30,14 @@ class MemberResource extends Resource
             ->schema([
                 TextInput::make('name')->required()->placeholder('Enter your name'),
                 TextInput::make('designation')->required()->placeholder('Enter designation'),
-                TextInput::make('tw_url')->label('Twitter URL')->placeholder('Twitter URL'),
-                TextInput::make('fb_url')->label('Facebook URL')->placeholder('Facebook URL'),
-                TextInput::make('in_url')->label('Instagram URL')->placeholder('Instagram URL'),
+                TextInput::make('tw_url')->url()->label('Twitter URL')->placeholder('Twitter URL'),
+                TextInput::make('fb_url')->url()->label('Facebook URL')->placeholder('Facebook URL'),
+                TextInput::make('in_url')->url()->label('Instagram URL')->placeholder('Instagram URL'),
                 FileUpload::make('image'),
                 Select::make('status')->options([
                     1 => 'Active',
                     0 => 'Block',
-                ])
+                ]),
             ]);
     }
 
@@ -43,7 +45,9 @@ class MemberResource extends Resource
     {
         return $table
             ->columns([
-                //
+                ImageColumn::make('image')->width(100),
+                TextColumn::make('name'),
+                TextColumn::make('designation'),
             ])
             ->filters([
                 //
