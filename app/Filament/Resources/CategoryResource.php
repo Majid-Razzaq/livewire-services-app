@@ -15,6 +15,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Set;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\Str;
 
 class CategoryResource extends Resource
@@ -43,7 +44,8 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('name'),
+                TextColumn::make('slug'),
             ])
             ->filters([
                 //
